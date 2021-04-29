@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Exercise Prototype</title>
+<script src="service.js"></script>
+</head>
+<body>
+<div id="Google_Ads">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9264436149757040"
+     crossorigin="anonymous"></script>
+<!-- RandoM_exercise_app -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9264436149757040"
+     data-ad-slot="3537973844"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<h1>Random Exercise App Beta</h1>
+<div id="edit_config">
+<p>Edit Config Button Comming Soon</p>
+<p><button onclick="alert('coming soon');" type="button">Edit Config</button></p>
+</div>
+
+<div id="player">Div Test</div>
+<div id = "clock">Clock </div>
+<p>Exercise Player</p>
+<audio id='exercise_player' controls autoplay>
+<source src="assets/intro.mp3">
+</audio>
+
+
+<div id="Google_Ads2">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9264436149757040"
+     crossorigin="anonymous"></script>
+<!-- RandoM_exercise_app -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9264436149757040"
+     data-ad-slot="3537973844"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<script>
+
+//Hours Prompt.. will be changed. 
+ let start_hour = prompt("Enter Start Hour");
+ while(!isNumber(start_hour)){
+     start_hour = prompt("Please enter Integer OnlyEnter Start Hour");
+     
+ }
+ let stop_hour = prompt("Enter Stop Hour");
+  while(!isNumber(stop_hour)){
+     stop_hour = prompt("Please enter Integer OnlyEnter stop Hour");
+     
+ }
+ let times_per_day = prompt("Enter How Many Times per day you want to do exercise");
+  while(!isNumber(times_per_day)){
+     times_per_day = prompt("Please enter Integer Only Enter times per day");
+     
+ }
+
+ //calculates seconds per time. 
+ let secs_per_time = (30 / times_per_day) * 60;
+
+//Creates Random Hours Set
+ let random_set = random_set_creator(start_hour,stop_hour,times_per_day);
+ console.log(random_set);
+
+ //initiates counter global variable
+ counter = secs_per_time;
+
+
+document.getElementById("player").innerHTML = "Random Exercise During the Day----<br>Start_Hour: "+start_hour+"<br>Stop Hour: "+stop_hour+"<br>Seconds Per Exercise: " +secs_per_time+'<br>Times Per Day: '+times_per_day;
+//Timer/clock function
+function timer(random_hour_set) {
+     var background_music = "assets/background_music.mp3"; //Background Music for exercise
+
+     //Clock Session
+     var date = new Date();
+     var hours = date.getHours();
+     var minutes = date.getMinutes();
+     var seconds = date.getSeconds();
+     //let hoursminutes = ((hours + parseFloat(((minutes /60)) * 100) / 100).toFixed(2)); //left if decided to use hoursminutes instead of seconds total. 
+     let second_totals = (hours*60*60) + (minutes*60) + seconds;
+
+
+     //Player Control ??
+     var player = document.getElementById('exercise_player');
+     var source_change = player.getElementsByTagName("source")[0].src; ///Source Type
+
+     if (random_hour_set.has(second_totals)){
+         var random_source = random_choice();
+         play_audio(random_source,player);
+         counter = secs_per_time + 4;
+     }
+     if(player.ended && (source_change !="https://www.radioultramix.com/test/tester/randomexercise/assets/intro.mp3")){
+           play_audio(background_music,player);
+
+     }
+     counter--;
+     if(counter == 0){
+         player.pause();
+     }
+     //Just Statuses on page
+     document.getElementById("clock").innerHTML = 'Current Time: '+hours+':'+minutes+':'+seconds+"<br> Current Total Seconds: "+second_totals+"<br>Current counter: "+counter; 
+     setTimeout("timer(random_set)",1000);
+ }
+ window.onload=timer(random_set);
+</script>
+</body>
+</html>
